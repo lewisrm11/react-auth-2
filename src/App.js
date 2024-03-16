@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard'; // make sure the path is correct
 import Profile from './pages/Profile'; // make sure the path is correct
 import AdminLayout from './layouts/AdminLayout'; // make sure the path is correct
 import PrivateRoute from './components/PrivateRoute'; // make sure the path is correct
+import PublicRoute from './components/PublicRoute';
 
 const App = () => {
   return (
@@ -22,9 +23,9 @@ const App = () => {
             <Link to="/admin">Admin</Link><br></br>
           </nav>
           <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/" element={<PublicRoute ><LandingPage /></PublicRoute>} />
+            <Route path="/login" element={<PublicRoute ><LoginPage /></PublicRoute>} />
+            <Route path="/register" element={<PublicRoute ><RegisterPage /></PublicRoute>} />
             <Route path="/admin/*" element={<PrivateRoute> <AdminLayout /></PrivateRoute>}></Route>
           </Routes>
         </div>
