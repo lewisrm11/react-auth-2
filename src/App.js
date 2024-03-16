@@ -1,34 +1,35 @@
 // App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import LandingPage from './components/LandingPage'; // make sure the path is correct
 import LoginPage from './components/LoginPage'; // make sure the path is correct
 import RegisterPage from './components/RegisterPage'; // make sure the path is correct
+import Dashboard from './pages/Dashboard'; // make sure the path is correct
+import Profile from './pages/Profile'; // make sure the path is correct
+import AdminLayout from './layouts/AdminLayout'; // make sure the path is correct
+import PrivateRoute from './components/PrivateRoute'; // make sure the path is correct
 
 const App = () => {
   return (
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-          </ul>
-        </nav>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Routes>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div>
+          <nav>
+            <Link to="/">Home</Link><br></br>
+            <Link to="/login">Login</Link><br></br>
+            <Link to="/register">Register</Link><br></br>
+            <Link to="/admin">Admin</Link><br></br>
+          </nav>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/admin/*" element={<PrivateRoute> <AdminLayout /></PrivateRoute>}></Route>
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 };
 

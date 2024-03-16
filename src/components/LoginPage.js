@@ -1,34 +1,18 @@
 // LoginPage.js
-import React, { useState } from 'react';
-import axios from 'axios';
-import useLocalStorage from '../hooks/useLocalStorage';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useLocalStorage('user', null);
-  const [token, setToken] = useLocalStorage('token', null);
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    try {
-      const response = await axios.post('http://localhost:8002/api/login', {
-        email,
-        password,
-      });
-
-      // Store the user in local storage
-      setUser(response.data);
-      // Store the user in local storage
-      setToken(response.data.data.token);
-
-      // Handle successful login here
-      console.log(response.data, user, token);
-    } catch (error) {
-      // Handle error here
-      console.error(error);
-    }
+    await login(email, password);
+    navigate('/admin/dashboard');
   };
 
   return (
