@@ -3,12 +3,22 @@ import axios from 'axios';
 import useLocalStorage from './useLocalStorage';
 import { useState } from 'react';
 //import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const useAuth = () => {
   const [user, setUser] = useLocalStorage('user', null);
   const [token, setToken] = useLocalStorage('token', null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   //const navigate = useNavigate();
+
+
+  /*useEffect(() => {
+    // Check for token in local storage on app load
+    //const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, [token]);*/
 
 
   const login = async (email, password) => {
@@ -60,6 +70,7 @@ const useAuth = () => {
     user,
     token,
     isAuthenticated,
+    setIsAuthenticated,
     login,
     logout
   };
